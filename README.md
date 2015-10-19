@@ -3,6 +3,6 @@
 
 #List of n0tes:
 
-- ### [Ruby on Rails n0tes][ror.md]
+### [Ruby on Rails n0tes][ror.md]
 
 [ror.md]: https://github.com/0mp/n0tes/blob/master/ror.md
