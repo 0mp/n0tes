@@ -46,3 +46,13 @@ reboot
 ```
 pacman -S tmux
 ```
+
+
+# Netctl is not working.
+
+1. `systemctl | grep netctl`
+2. You should have only one networking .service enabled at once.
+3. `systemctl disable dhcpcd.service systemd-networkd.service wicd.service`
+4. reboot
+5. cheers
+
