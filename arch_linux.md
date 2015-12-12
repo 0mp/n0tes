@@ -56,3 +56,19 @@ pacman -S tmux
 4. reboot
 5. cheers
 
+# tmux
+
+- How to resize?
+
+ctrl-b -> esc -> arrows
+
+# yaourt
+
+- List packages from AUR: `yaourt -a foobar`
+
+# keyboard.
+
+- Persistant configuration of keymap: `localectl set-keymap --no-convert keymap_name_here`
+- Chagne white squares to proper Polish letters: `setfont lat2-16 -m 8859-2`
+
+
