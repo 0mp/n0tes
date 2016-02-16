@@ -38,7 +38,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ip link
 systemctl enable dhcpcd@NAME-OF-THE-NETWORK.service
 pacman -S wireless_tools network-tools iw dialog
-exit 
+exit
 umount -R /mnt
 reboot
 ```
@@ -61,6 +61,10 @@ pacman -S tmux
 - How to resize?
 
 ctrl-b -> esc -> arrows
+
+- Hide status bar
+
+set -g status off
 
 # yaourt
 
