@@ -75,4 +75,3 @@ set -g status off
 - Persistant configuration of keymap: `localectl set-keymap --no-convert keymap_name_here`
 - Chagne white squares to proper Polish letters: `setfont lat2-16 -m 8859-2`
 
-
