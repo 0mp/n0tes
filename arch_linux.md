@@ -1,4 +1,5 @@
-# Installation
+Installation
+------------
 
 ```
 wifi-menu
@@ -48,7 +49,8 @@ pacman -S tmux
 ```
 
 
-# Netctl is not working.
+Netctl is not working
+---------------------
 
 1. `systemctl | grep netctl`
 2. You should have only one networking .service enabled at once.
@@ -56,7 +58,9 @@ pacman -S tmux
 4. reboot
 5. cheers
 
-# tmux
+
+tmux
+----
 
 - How to resize?
 
@@ -66,11 +70,15 @@ ctrl-b -> esc -> arrows
 
 set -g status off
 
-# yaourt
+
+yaourt
+------
 
 - List packages from AUR: `yaourt -a foobar`
 
-# keyboard.
+
+keyboard
+--------
 
 - Persistant configuration of keymap: `localectl set-keymap --no-convert keymap_name_here`
 - Chagne white squares to proper Polish letters: `setfont lat2-16 -m 8859-2`
