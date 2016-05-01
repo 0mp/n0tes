@@ -1,3 +1,5 @@
-# Installation without access to root:
+# node.js
 
-./configure --prefix /your/desired/directory/for/node
+## Installation without access to root
+
+    ./configure --prefix /your/desired/directory/for/node
