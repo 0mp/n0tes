@@ -44,3 +44,8 @@ Merge the feature into master
     git pull origin awesome-branch
     git push
 
+### Clean up
+
+Delete stale remote-tracking branches
+
+    git remote prune <remote>
