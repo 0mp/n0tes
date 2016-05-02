@@ -46,7 +46,7 @@ If the screen resolution is too small then you can change it using these command
     vidcontrol MODE_278
 
 
-## Software Installation
+## Software installation
 
 ([Handbook reference](https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/ports-finding-applications.html))
 
@@ -87,6 +87,28 @@ It might take very long because
 Consider using the `-d` option to automatically delete
 old files. ([Source](https://lists.freebsd.org/pipermail/freebsd-questions/2012-July/243052.html))
 
+### Update software
+
+    freebsd-update fetch && freebsd-update install
+
+([Source](https://forums.freebsd.org/threads/15799/#post-93783))
+
+#### The Handbook way
+
+This soltuion feels a little bit broken.
+
+    portsnap fetch
+    portsnap extract
+    cd /usr/ports/ports-mgmt/portmaster
+    make install clean
+    portmaster -a
+
+#### The 0mp way
+
+    freebsd-update fetch && freebsd-update install
+    pkg version -vIl '<'
+    pkg upgrade
+
 
 ## Synchronize with the global time using ntp
 
@@ -94,4 +116,24 @@ Add `ntpd_sync_on_start="YES"` to  `/etc/rc.conf` so that ntpd sync with the ser
 
 ([Source](https://forums.freebsd.org/threads/16295/))
 
+
+## Add a user to the wheel
+
+    sudo pw group mod wheel -m <username>
+
+## Install OpenBox
+
+    su
+    freebsd-update fetch && freebsd-update install
+    pkg install xorg openbox tint2
+    cd ~
+    mkdir .config
+    cd .config
+    mkdir openbox
+    mkdir tint2
+    cp /usr/local/etc/xdg/openbox/*.xml openbox/
+    echo '#!/bin/sh' >> openbox/autostart.sh
+    chmod +x openbox/autostart.sh
+    echo 'hald_enable="YES"' >> /etc/rc.conf
+    echo 'exec openbox-session' >> ~/.xinitrc
 
