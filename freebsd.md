@@ -121,7 +121,13 @@ Add `ntpd_sync_on_start="YES"` to  `/etc/rc.conf` so that ntpd sync with the ser
 
     sudo pw group mod wheel -m <username>
 
-## Install OpenBox
+## Install a window manager
+
+### Install Mate
+
+https://www.youtube.com/watch?v=YncqBz0bZcQ
+
+### Install OpenBox
 
     su
     freebsd-update fetch && freebsd-update install
@@ -136,4 +142,81 @@ Add `ntpd_sync_on_start="YES"` to  `/etc/rc.conf` so that ntpd sync with the ser
     chmod +x openbox/autostart.sh
     echo 'hald_enable="YES"' >> /etc/rc.conf
     echo 'exec openbox-session' >> ~/.xinitrc
+
+http://daemon-notes.com/articles/desktop/openbox
+https://forums.freebsd.org/threads/35308/
+
+If you want to run `tint2` on the startup the add a `tint2 &` line to your
+autostart.sh.
+
+([Source](https://www.youtube.com/watch?v=k_-W8XmOycs))
+
+
+### Install dwm
+
+Awful.
+
+http://agreif.blogspot.com/2014/03/configure-dwm-on-freebsd.html
+https://forums.freebsd.org/threads/7816://forums.freebsd.org/threads/7816/
+https://srobb.net/dwm.html
+
+### i3wm
+
+Configs:
+* [1](https://github.com/giacomos/i3wm-config)
+* [2](http://blog.tunnelshade.in/2014/05/making-i3-beautiful.html)
+* [3](http://i3wm.org/docs/userguide.html#_scratchpad)
+
+#### Install
+
+http://bottlenix.wikidot.com/installing-i3wm
+
+#### Basics
+
+| Action | Shortcut |
+|--------|----------|
+| Open a new terminal | mod + Enter |
+| Split vertically | mod + v |
+| Split horizontally | mod + h |
+| Change to splith/splitv layout | mod + e |
+| Change to stacking layout | mod + s |
+| Change to tabbed layout | mod + w |
+| Go fullscreen | mod + f |
+| Close a window | C + w |
+| Kill a window | mod + S + q |
+| Go to a workspace | mod + num |
+| Move to a workspace | mod + S + num |
+| Restart i3 inplace | mod + S + r |
+| Exit i3 | mod + S + e |
+| Toggle floating mode | mod + S + Space |
+
+#### Key repeat rate
+
+Add `xset r rate MS_DELAY RATE` to `.xinitrc`.
+
+## Remap Caps Lock to Control
+
+### in the console mode
+
+Keymaps are stored in `/usr/share/vt/keymaps`.
+**scan code** number 058 is represents the Caps Lock key.
+
+Although it should be possible [to load your custom keymap in
+`/etc/rc.conf`](https://www.geeklan.co.uk/?p=1274) I failed to do it. Instead I put
+[`/usr/sbin/kbdcontrol -l ~/my-keyboard-mappings`](http://www.freebsddiary.org/kbdcontrol.php)
+into my `~/.bashrc`.
+
+### in X server
+
+Add `setxkbmap -option ctrl:nocaps` to your `.xinitrc`.
+
+
+## So you cannot boot because you broke loader.conf, huh?
+
+Let's say you've added `kern.vty=vt` to your `/boot/loader.conf` and now your FreeBSD won't boot.
+
+1. **Escape to loader prompt** in the boot menu.
+2. Type `set ketn.vty=""`.
+3. Type `boot`.
+4. Log in and remove that awful line from `loader.conf`.
 
