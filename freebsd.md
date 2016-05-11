@@ -220,3 +220,37 @@ Let's say you've added `kern.vty=vt` to your `/boot/loader.conf` and now your Fr
 3. Type `boot`.
 4. Log in and remove that awful line from `loader.conf`.
 
+
+## Network
+
+### Connect to eduroam
+
+1. Add the following content to `/etc/wpa_supplicant.conf`:
+
+        network={
+            ssid="eduroam"
+            proto=WPA WPA2
+            key_mgmt=WPA-EAP
+            eap=PEAP
+            group=TKIP
+            identity="<pesel>@uw.edu.pl"
+            password="secretsexgod"
+        }
+
+2. Append to `/etc/rc.conf`:
+
+        ifconfig_wlan0="WPA DHCP" # Change wlan0 to your interface.
+
+3. Restart.
+
+        /etc/rc.d/netif restart
+
+([Source](http://www.bishnet.net/tim/blog/2008/11/07/eduroam-on-freebsd/))
+
+## Video
+
+### Allow brightness control.
+
+Add `acpi_video="YES"` to `/boot/loader.conf`.
+
+([Source](https://forums.freebsd.org/threads/6186/))
