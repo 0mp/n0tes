@@ -251,6 +251,7 @@ Let's say you've added `kern.vty=vt` to your `/boot/loader.conf` and now your Fr
 
 ### Allow brightness control.
 
-Add `acpi_video="YES"` to `/boot/loader.conf`.
+Add `acpi_video_load="YES"` to `/boot/loader.conf`e
 
-([Source](https://forums.freebsd.org/threads/6186/))
+([Source 1](https://forums.freebsd.org/threads/6186/))
+([Source 2](https://forums.freebsd.org/threads/39771/))
