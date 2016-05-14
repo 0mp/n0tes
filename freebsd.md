@@ -291,19 +291,22 @@ Add `acpi_video_load="YES"` to `/boot/loader.conf`e
 
 ### Using your @FreeBSD email alias with Gmail.
 
-Of course you should start from obtaining your FreeBSD alias from the FreeBSD admins.
+1. Of course you should start from obtaining your FreeBSD alias from the FreeBSD admins.
+2. Turn on the 2-step authentication at <https://myaccount.google.com/security/signinoptions/two-step-verification>.
+3. Go to <https://security.google.com/settings/security/apppasswords>.
+4. Log in using your Gmail account.
+5. In **Select app** choose **Other (Customised name)** and in **Select device** choose **Other (Customised name)**.
+6. Click **GENERATE**.
+7. Name it as *FreeBSD* or something.
+8. Copy your new app password to the clipboard.
+9. Go to <https://gmail.com> and open **Settings**.
+10. Go to **Accounts and Import**, then in the **Send mail as:** section click **Add another email address that you own**. A window titled **Gmail - Add another email address that you own** should pop up.
+11. Enter your name and your FreeBSD email alias like *0mp@FreeBSD.org*.
 
-1. Turn on the 2-step authentication at <https://myaccount.google.com/security/signinoptions/two-step-verification>.
-2. Go to <https://security.google.com/settings/security/apppasswords>.
-3. Log in using your Gmail account.
-4. In **Select app** choose **Other (Customised name)** and in **Select device** choose **Other (Customised name)**.
-5. Click **GENERATE**.
-6. Name it as *FreeBSD* or something.
-7. Copy your new app password to the clipboard.
-8. Go to <https://gmail.com> and open **Settings**.
-9. Go to **Accounts and Import**, then in the **Send mail as:** section click **Add another email address that you own**. A window titled **Gmail - Add another email address that you own** should pop up.
-10. Enter your name and your FreeBSD email alias like *0mp@FreeBSD.org* (_Note that you should use your own username connected to your Gmail account by the FreeBSD admins instead of 0mp). Make sure that **Treat as an alias.** is checked. Proceed.
-11. Now fill in the information as follows:
+    Note that you should use your own username connected to your Gmail account by the FreeBSD admins instead of _0mp_.
+
+12. Make sure that **Treat as an alias.** is checked. Proceed.
+13. Now fill in the information as follows:
     * **SMPTP Server**: smtp.gmail.com
     * **Port**: 587
     * **Username**: youralias@gmail.com
@@ -312,5 +315,5 @@ Of course you should start from obtaining your FreeBSD alias from the FreeBSD ad
 
     Click **Add Account**.
 
-12. You should receive an email with a confirmation that you want to allow Gmail to use your FreeBSD alias. The email should contain both a special code or a link to click. The easiest way is to just click the provided link so that your decision is approved.
-13. Cheers! You should be able to send emails using your @FreeBSD address from Gmail.
+14. You should receive an email with a confirmation that you want to allow Gmail to use your FreeBSD alias. The email should contain both a special code or a link to click. The easiest way is to just click the provided link so that your decision is approved.
+15. Cheers! You should be able to send emails using your @FreeBSD address from Gmail.
