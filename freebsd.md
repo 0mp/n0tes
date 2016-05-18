@@ -60,7 +60,12 @@ into my `~/.bashrc`.
 
 #### In the X server
 
-Add `setxkbmap -option ctrl:nocaps` to your `.xinitrc`.
+Add `setxkbmap -option ctrl:nocaps` to your `~/.xinitrc`.
+
+
+### Set Polish keyboard.
+
+Add `setxkbmap pl` to your `~/.xinitrc`.
 
 
 ## Network
