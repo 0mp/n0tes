@@ -49,3 +49,7 @@ Merge the feature into master
 Delete stale remote-tracking branches
 
     git remote prune <remote>
+
+Sync the server list of branches with the local list.
+
+    git push --mirror <origin>
