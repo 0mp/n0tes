@@ -18,7 +18,7 @@ As a result you'll be logged into a readonly single user mode.
  
  enter 
  
- > *yes*.
+ > *yes*
  
    It will not work probably. Try again and this time enter 
    
