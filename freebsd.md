@@ -97,11 +97,11 @@ Add `if_rum_load="YES"` to `/boot/loader.conf`.
 
 * Check for known vulnerabilities.
 
-       pkg audit -F
+        pkg audit -F
 
 * Serach for packages.
 
-       pkg search git
+        pkg search git
 
 * List packages by origin.
 
@@ -135,7 +135,7 @@ Add `if_rum_load="YES"` to `/boot/loader.conf`.
 
 ([Source](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-ports-on-freebsd-10-1))
 
-    Consider using the `-d` option to automatically delete old files. Still awful slow. ([Source](https://lists.freebsd.org/pipermail/freebsd-questions/2012-July/243052.html))
+   Consider using the `-d` option to automatically delete old files. Still awfully slow. ([Source](https://lists.freebsd.org/pipermail/freebsd-questions/2012-July/243052.html))
 
 
 ### Update software
@@ -319,9 +319,9 @@ Add `acpi_video_load="YES"` to `/boot/loader.conf`e
 8. Copy your new app password to the clipboard.
 9. Go to <https://gmail.com> and open **Settings**.
 10. Go to **Accounts and Import**, then in the **Send mail as:** section click **Add another email address that you own**. A window titled **Gmail - Add another email address that you own** should pop up.
-11. Enter your name and your FreeBSD email alias like *0mp@FreeBSD.org*.
+11. Enter your name and your FreeBSD email alias like *xxx@FreeBSD.org*.
 
-    Note that you should use your own username connected to your Gmail account by the FreeBSD admins instead of _0mp_.
+    Note that you should use your own username connected to your Gmail account by the FreeBSD admins instead of _xxx_.
 
 12. Make sure that **Treat as an alias.** is checked. Proceed.
 13. Now fill in the information as follows:
