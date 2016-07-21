@@ -12,8 +12,18 @@ As a result you'll be logged into a readonly single user mode.
 1. Reboot.
 2. Choose to boot in a single user mode.
 3. Run `fsck`.
-4. When prompted **USE JOURNAL?** enter *yes*.
-   It will not work probably. Try again and enter *no* this time.
+4. When prompted 
+
+ > **USE JOURNAL?** 
+ 
+ enter 
+ 
+ > *yes*.
+ 
+   It will not work probably. Try again and this time enter 
+   
+ > *no*
+ 
 5. Reboot.
 
 ### Live CD boot
