@@ -276,6 +276,11 @@ the server on start.
 User accounts
 -------------
 
+### Add a user
+```sh
+adduser
+```
+
 ### Add a user to the wheel
 
 ```sh
