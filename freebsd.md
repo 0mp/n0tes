@@ -179,8 +179,8 @@ Software installation
  > the process. If you have any packages installed with pkg with newer versions
  > available through the ports system, these will be updated and transitioned
  > over to ports as well.
-
-([Source](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-ports-on-freebsd-10-1))
+ 
+ ([Source](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-ports-on-freebsd-10-1))
 
  Consider using the `-d` option to automatically delete old files. Still
  awfully slow. ([Source](https://lists.freebsd.org/pipermail/freebsd-questions/2012-July/243052.html))
