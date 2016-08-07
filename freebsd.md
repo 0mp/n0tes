@@ -57,7 +57,7 @@ options ON.
 
 ### Login in single user mode and make the file system writable.
 
-I get *Read-onlu file system* error when I boot into the single user mode.
+I get *Read-only file system* error when I boot into the single user mode.
 According to [this website (link)](https://lists.freebsd.org/pipermail/freebsd-questions/2004-November/066562.html)
 you can simply run:
 
