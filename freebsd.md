@@ -179,7 +179,7 @@ Software installation
  > the process. If you have any packages installed with pkg with newer versions
  > available through the ports system, these will be updated and transitioned
  > over to ports as well.
- 
+
  ([Source](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-ports-on-freebsd-10-1))
 
  Consider using the `-d` option to automatically delete old files. Still
@@ -271,6 +271,14 @@ Add `ntpd_sync_on_start="YES"` to  `/etc/rc.conf` so that ntpd sync with
 the server on start.
 
 ([Source](https://forums.freebsd.org/threads/16295/))
+
+### The time is wrong ...
+
+...although I've already tried setting `/etc/localtime` and running `tzsetup(8)`.
+
+Well, then you should try to remove the `/etc/wall_cmos_clock` file.
+
+([Source (link)](https://forums.freebsd.org/threads/48401/#post-271086))
 
 
 User accounts
