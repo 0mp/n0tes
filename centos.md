@@ -17,6 +17,15 @@ second listed kernel your default one, run:
 grub2-set-default 1
 ```
 
+Increase the console resolution
+-------------------------------
+
+Open `/etc/default/grub` and add `vga=791` at the end of the `GRUB_CMDLINK_LINUX`
+string.  Run `grub2-mkconfig -o /etc/grub2.cfg` and reboot to have the changes
+applied.
+
+The list of Linux video mode numbers is available [here (link)](https://en.wikipedia.org/wiki/VESA_BIOS_Extensions#Linux_video_mode_numbers).
+
 
 SSH
 ===
