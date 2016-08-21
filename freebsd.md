@@ -434,6 +434,11 @@ Network
 ([Source](http://www.bishnet.net/tim/blog/2008/11/07/eduroam-on-freebsd/))
 
 
+### Resources
+
+- [FreeBSD Wireless Quickstart](https://srobb.net/fbsdquickwireless.html)
+
+
 Video
 -----
 
