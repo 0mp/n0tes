@@ -108,7 +108,15 @@ Add `setxkbmap -option ctrl:nocaps` to your `~/.xinitrc`.
 
 ### Set Polish keyboard.
 
-Add `setxkbmap pl` to your `~/.xinitrc`.
+- Add to the default class inside `/etc/login.conf`:
+
+ ```
+ :charset=UTF-8:\
+ :lang=en_GB.UTF-8:
+ ```
+
+- Run `cap_mkdb /etc/login.conf`.
+- Add `setxkbmap pl` to your `~/.xinitrc`.
 
 
 Network
