@@ -1,65 +1,70 @@
-FreeBSD
-=======
+# Boot
 
-Boot
-----
-
-### Cannot boot to multiuser due to a segmentation fault in `fsck`.
+## Cannot boot to multiuser due to a segmentation fault in `fsck`
 
 It happens when you poweroff your machine during booting. As a result
 you'll get a segmentation fault during boot when `fsck` checks your hard drive.
 As a result you'll be logged into a readonly single user mode.
 
 1. Reboot.
+
 2. Choose to boot in a single user mode.
+
 3. Run `fsck`.
+
 4. When prompted
 
- > **USE JOURNAL?**
+   > **USE JOURNAL?**
 
- enter
+   enter
 
- > *yes*
+   > *yes*
 
    It will not work probably. Try again and this time enter
 
- > *no*
+   > *no*
 
 5. Reboot.
 
-### Dual boot BunsenLabs GNU/Linux and FreeBSD using GRUB 2
+## Dual boot
+
+BunsenLabs GNU/Linux and FreeBSD using GRUB 2
 
 1. Boot GNU/Linux.
+
 2. Create `/boot/grub2/custom.cfg` file.
+
 3. Add these lines to the file:
 
-        menuentry "FreeBSD" {
-        set root='(hd0,3)'
-        kfreebsd /boot/loader
-        }
+   ```text
+   menuentry "FreeBSD" {
+   set root='(hd0,3)'
+   kfreebsd /boot/loader
+   }
+   ```
 
-([Source](https://srobb.net/grub2.html))
+([Source][boot-grub2])
 
+[boot-grub2]: https://srobb.net/grub2.html
 
-### Fix `run_interrupt_driven_hooks still waiting after 60 seconds for xpt_config`
+## Fix `run_interrupt_driven_hooks still waiting after 60 seconds for xpt_config`
 
 Append those lines to the `/boot/device.hints` file:
 
-    hint.ata.0.disabled="1"
-    hint.ata.1.disabled="1"
+```text
+hint.ata.0.disabled="1"
+hint.ata.1.disabled="1"
+```
 
-
-### Live CD boot
+## Live CD boot
 
 My old laptop decided to boot after setting **ACPI Support** and **Safe Mode**
 options ON.
 
-
-### Login in single user mode and make the file system writable.
+## Login in single user mode and make the file system writable.
 
 I get *Read-only file system* error when I boot into the single user mode.
-According to [this website (link)](https://lists.freebsd.org/pipermail/freebsd-questions/2004-November/066562.html)
-you can simply run:
+According to [this website (link)][boot-single-user-mode] you can simply run:
 
 ```sh
 # Change the filesystem from read-only to write/read.
@@ -70,8 +75,9 @@ mount -a
 
 If the commands above fail then try to run `fsck -y` and try again.
 
+[boot-single-user-mode]: https://lists.freebsd.org/pipermail/freebsd-questions/2004-November/066562.html
 
-### So you cannot boot because you broke loader.conf, huh?
+## So you cannot boot because you broke loader.conf, huh?
 
 Let's say you've added `kern.vty=vt` to your `/boot/loader.conf` and now
 your FreeBSD won't boot.
@@ -81,120 +87,142 @@ your FreeBSD won't boot.
 3. Type `boot`.
 4. Log in and remove that awful line from `loader.conf`.
 
+# Keyboard
 
-Keyboard
---------
-
-### Set the key repeat rate
+## Set the key repeat rate
 
 Add `xset r rate MS_DELAY RATE` to `.xinitrc`.
 
+## Remap Caps Lock to Control
 
-### Remap Caps Lock to Control
-
-#### In the console mode (tty)
+### In the console mode (tty)
 
 Keymaps are stored in `/usr/share/vt/keymaps`.
 **scan code** number 058 is represents the Caps Lock key.
 
-Although it should be possible [to load your custom keymap in `/etc/rc.conf`](https://www.geeklan.co.uk/?p=1274)
-I failed to do it. Instead I put [`/usr/sbin/kbdcontrol -l ~/my-keyboard-mappings`](http://www.freebsddiary.org/kbdcontrol.php)
-into my `~/.bashrc`.
+Although it should be possible
+[to load your custom keymap in `/etc/rc.conf`][kbd-custom-keymap] I failed to
+do it. Instead I put
+[`/usr/sbin/kbdcontrol -l ~/my-keyboard-mappings`][kbd-custom-keymap-bash] into
+my `~/.bashrc`.
 
-#### In the X server
+[kbd-custom-keymap]: https://www.geeklan.co.uk/?p=1274
+[kbd-custom-keymap-bash]: http://www.freebsddiary.org/kbdcontrol.php
+
+### In the X server
 
 Add `setxkbmap -option ctrl:nocaps` to your `~/.xinitrc`.
 
+## Set Polish keyboard.
 
-### Set Polish keyboard.
-
-- Add to the default class inside `/etc/login.conf`:
+1. Add to the default class inside `/etc/login.conf`:
 
  ```
  :charset=UTF-8:\
  :lang=en_GB.UTF-8:
  ```
 
-- Run `cap_mkdb /etc/login.conf`.
-- Add `setxkbmap pl` to your `~/.xinitrc`.
+1. Run `cap_mkdb /etc/login.conf`.
 
+1. Add `setxkbmap pl` to your `~/.xinitrc`.
 
-Network
--------
+1. Add `keymap="pl_PL.ISO8859-2.kbd"` to `/etc/rc.conf`.
 
-### WiFi TP-LINK TL-WN321G drivers
+# Network
+
+## WiFi TP-LINK TL-WN321G drivers
 
 Add `if_rum_load="YES"` to `/boot/loader.conf`.
 
+## TP-LINK TL-WN725N v2.1
 
-Software installation
----------------------
+Add to `/boot/loader.conf`:
 
-([Handbook reference](https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/ports-finding-applications.html))
+```text
+if_urtwn_load="YES"
+legal.realtek.license_ack=1
+```
+
+Add to `/etc/rc.conf`:
+
+```text
+wlans_urtwn0="wlan33"
+ifconfig_wlan33="DHCP WPA"
+```
+
+You might need to restart `netif`.
+
+# Software installation
+
+([Handbook reference][soft-handbook])
+
+[soft-handbook]: https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/ports-finding-applications.html
 
 
-### Packages
+## Packages
 
 * Check for known vulnerabilities.
 
- ```sh
- pkg audit -F
- ```
+  ```sh
+  pkg audit -F
+  ```
 
 * Serach for packages.
 
- ```sh
- pkg search git
- ```
+  ```sh
+  pkg search git
+  ```
 
 * List packages by origin.
 
- ```sh
- pkg search -o git
- ```
+  ```sh
+  pkg search -o git
+  ```
 
 * Information about installed packages.
 
- ```sh
- pkg info pkg
- ```
+  ```sh
+  pkg info pkg
+  ```
 
 
-### Ports
+## Ports
 
 * Fetch the newest makefiles.
 
- ```sh
- portsnap fetch update
- ```
+  ```sh
+  portsnap fetch update
+  ```
 
 * Then to update all the old ports.
 
- ```sh
- portmaster -a
- ```
+  ```sh
+  portmaster -a
+  ```
 
- **Don't do it.**
+  **Don't do it.**
 
- It might take very long because
+  It might take very long because
 
- > ```sh
- > sudo portmaster -a
- > ```
- >
- > This will update all of the ports on the system to their newest version.
- > Any new configuration options will be presented to you at the beginning of
- > the process. If you have any packages installed with pkg with newer versions
- > available through the ports system, these will be updated and transitioned
- > over to ports as well.
+  > ```sh
+  > sudo portmaster -a
+  > ```
+  >
+  > This will update all of the ports on the system to their newest version.
+  > Any new configuration options will be presented to you at the beginning of
+  > the process. If you have any packages installed with pkg with newer versions
+  > available through the ports system, these will be updated and transitioned
+  > over to ports as well.
 
- ([Source](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-ports-on-freebsd-10-1))
+  ([Source][soft-ocean-ports])
 
- Consider using the `-d` option to automatically delete old files. Still
- awfully slow. ([Source](https://lists.freebsd.org/pipermail/freebsd-questions/2012-July/243052.html))
+  Consider using the `-d` option to automatically delete old files. Still
+  awfully slow. ([Source][soft-d])
 
+[soft-ocean-ports]: https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-ports-on-freebsd-10-1
+[soft-d]: https://lists.freebsd.org/pipermail/freebsd-questions/2012-July/243052.html
 
-### Update software
+## Update software
 
 ```sh
 freebsd-update fetch && freebsd-update install
@@ -202,9 +230,11 @@ pkg version -vIl '<'
 pkg upgrade
 ```
 
-([Source](https://forums.freebsd.org/threads/15799/#post-93783))
+([Source][soft-update])
 
-#### Problems with loggining in after `freebsd-update install`.
+[soft-update]: https://forums.freebsd.org/threads/15799/#post-93783
+
+### Problems with loggining in after `freebsd-update install`.
 
 Once, I ran `freebsd-update fetch && freebsd-update install` and I got an error
 message from `cap_mkdb` I guess, but I cannot remember now. The problem was that
@@ -216,7 +246,7 @@ single user mode the filesystem is read-only).
 
 At first I tried to run:
 
-```
+```sh
 mergemaster
 ```
 
@@ -228,7 +258,7 @@ The problem was that `cap_mkdb` was unable to process the `/etc/login.conf` file
 after the upgrade. Maybe the upgrade reset/broke `/etc/login.conf`. The error
 was:
 
-> ```
+> ```text
 > cap_mkdb: potential reference loop detected
 > ```
 
@@ -239,7 +269,7 @@ the definition of the `default` class (which obviosuly caused the referece
 loop). Here's an example of a working `default` class from `/etc/login.conf` (as
 you can see there is no `:tc=default:` there).
 
-```
+```text
 default:\
         :passwd_format=sha512:\
         :copyright=/etc/COPYRIGHT:\
@@ -269,50 +299,49 @@ After fixing `/etc/login.conf` simply run `cap_mkdb /etc/login.conf`. Hopefully,
 it does not produce any warnings. Now you should be able to log in again to your
 FreeBSD.
 
+# Time and date
 
-Time and date
--------------
-
-### Synchronize with the global time using ntp
+## Synchronize with the global time using ntp
 
 Add `ntpd_sync_on_start="YES"` to  `/etc/rc.conf` so that ntpd sync with
 the server on start.
 
-([Source](https://forums.freebsd.org/threads/16295/))
+([Source][time-1])
 
-### The time is wrong ...
+[time-1]: https://forums.freebsd.org/threads/16295/
+
+## The time is wrong...
 
 ...although I've already tried setting `/etc/localtime` and running `tzsetup(8)`.
 
 Well, then you should try to remove the `/etc/wall_cmos_clock` file.
 
-([Source (link)](https://forums.freebsd.org/threads/48401/#post-271086))
+([Source][time-2])
 
+[time-2]: https://forums.freebsd.org/threads/48401/#post-271086
 
-User accounts
--------------
+# User accounts
 
-### Add a user
+## Add a user
+
 ```sh
 adduser
 ```
 
-### Add a user to the wheel
+## Add a user to the wheel
 
 ```sh
 sudo pw group mod wheel -m <username>
 ```
 
+# Video
 
-Video
------
-
-### Change the video mode
+## Change the video mode
 
 If the screen resolution is too small then you can change it using
 these commands.
 
-([Source](https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/consoles.html))
+([Source][video-1])
 
 ```sh
 # Load the vesa module.
@@ -323,27 +352,33 @@ vidcontrol -i mode
 vidcontrol MODE_278
 ```
 
+[video-1]: https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/consoles.html
 
-Window manager
---------------
+# Window manager
 
-### dwm
+## dwm
 
-Awful.
+<strike>Awful.</strike> **Awesome.**
 
-<http://agreif.blogspot.com/2014/03/configure-dwm-on-freebsd.html>
-<https://forums.freebsd.org/threads/7816://forums.freebsd.org/threads/7816/>
-<https://srobb.net/dwm.html>
+### Configuration files
 
+- [agreif.blogspot.com][wm-dwm-1]
+- [forums.freebsd.org][wm-dwm-2]
+- [scrobb.net][wm-dwm-3]
 
-### i3wm
+[wm-dwm-1]: http://agreif.blogspot.com/2014/03/configure-dwm-on-freebsd.html
+[wm-dwm-2]: https://forums.freebsd.org/threads/7816://forums.freebsd.org/threads/7816/
+[wm-dwm-3]: https://srobb.net/dwm.html
 
+## i3wm
 
-#### Installation
+### Installation
 
-<http://bottlenix.wikidot.com/installing-i3wm>
+See [installation tuturial][wm-i3wm-install].
 
-#### Basics
+[wm-i3wm-install]: http://bottlenix.wikidot.com/installing-i3wm
+
+### Basics
 
 | Action | Shortcut |
 |--------|----------|
@@ -362,19 +397,23 @@ Awful.
 | Exit i3 | mod + S + e |
 | Toggle floating mode | mod + S + Space |
 
-#### Configs
+### Configuration files
 
-* [1](https://github.com/giacomos/i3wm-config)
-* [2](http://blog.tunnelshade.in/2014/05/making-i3-beautiful.html)
-* [3](http://i3wm.org/docs/userguide.html#_scratchpad)
+1. [giacomos][wm-i3wm-cf1]
+2. [tunnelshade][wm-i3wm-cf2]
+3. [i3wm.org][wm-i3wm-cf3]
 
+[wm-i3wm-cf1]: https://github.com/giacomos/i3wm-config
+[wm-i3wm-cf2]: http://blog.tunnelshade.in/2014/05/making-i3-beautiful.html
+[wm-i3wm-cf3]: http://i3wm.org/docs/userguide.html#_scratchpad
 
-### Mate
+## Mate
 
-<https://www.youtube.com/watch?v=YncqBz0bZcQ>
+[Tutorial][wm-mate-1].
 
+[wm-mate-1]: https://www.youtube.com/watch?v=YncqBz0bZcQ
 
-### OpenBox
+## OpenBox
 
 ```sh
 su
@@ -392,42 +431,46 @@ echo 'hald_enable="YES"' >> /etc/rc.conf
 echo 'exec openbox-session' >> ~/.xinitrc
 ```
 
-<http://daemon-notes.com/articles/desktop/openbox>
-<https://forums.freebsd.org/threads/35308/>
+- [daemon-notes][wm-openbox-1]
+- [forums.freebsd.org][wm-openbox-2]
 
-#### tint2
+[wm-openbox-1]: http://daemon-notes.com/articles/desktop/openbox
+[wm-openbox-2]: https://forums.freebsd.org/threads/35308/
+
+### tint2
+
 If you want to run `tint2` on the startup the add a `tint2 &` line to your
 autostart.sh.
 
-([Source](https://www.youtube.com/watch?v=k_-W8XmOycs))
+([Source][wm-openbox-tint])
 
+[wm-openbox-tint]: https://www.youtube.com/watch?v=k_-W8XmOycs
 
-Network
--------
+# Network
 
-### Connect to eduroam
+## Connect to eduroam
 
 1. Add the following content to `/etc/wpa_supplicant.conf`:
 
- ```
- network={
-     ssid="eduroam"
-     proto=WPA WPA2
-     key_mgmt=WPA-EAP
-     eap=PEAP
-     group=TKIP
-     identity="<pesel>@uw.edu.pl"
-     password="secretsexgod"
- }
- ```
+   ```text
+   network={
+       ssid="eduroam"
+       proto=WPA WPA2
+       key_mgmt=WPA-EAP
+       eap=PEAP
+       group=TKIP
+       identity="<pesel>@uw.edu.pl"
+       password="secretsexgod"
+   }
+   ```
 
 2. Append to `/etc/rc.conf`:
 
- ```sh
- ifconfig_wlan0="WPA DHCP" # Change wlan0 to your interface.
- ```
+   ```text
+   ifconfig_wlan0="WPA DHCP" # Change wlan0 to your interface.
+   ```
 
-3. Restart.
+3. Restart:
 
  ```sh
  /etc/rc.d/netif restart
@@ -439,65 +482,79 @@ Network
  service netif restart
  ```
 
-([Source](http://www.bishnet.net/tim/blog/2008/11/07/eduroam-on-freebsd/))
+([Source][net-eduroam])
 
+[net-eduroam]: http://www.bishnet.net/tim/blog/2008/11/07/eduroam-on-freebsd/
 
 ### Resources
 
-- [FreeBSD Wireless Quickstart](https://srobb.net/fbsdquickwireless.html)
+- [FreeBSD wireless quickstart][net-quickstart]
 
+[net-quickstart]: https://srobb.net/fbsdquickwireless.html
 
-Video
------
+# Video
 
+## Allow brightness control.
 
-### Allow brightness control.
+Add `acpi_video_load="YES"` to `/boot/loader.conf`.
 
-Add `acpi_video_load="YES"` to `/boot/loader.conf`e
+- ([Source 1][vid-1])
+- ([Source 2][vid-2])
 
-([Source 1](https://forums.freebsd.org/threads/6186/))
-([Source 2](https://forums.freebsd.org/threads/39771/))
+[vid-1]: https://forums.freebsd.org/threads/6186/
+[vid-2]: https://forums.freebsd.org/threads/39771/
 
+# The FreeBSD Project
 
-The FreeBSD Project
--------------------
-
-### Using your @FreeBSD email alias with Gmail.
+## Using your @FreeBSD email alias with Gmail
 
 1. Of course you should start from obtaining your FreeBSD alias
-from the FreeBSD admins.
-2. Turn on the 2-step authentication
-at https://myaccount.google.com/security/signinoptions/two-step-verification.
-3. Go to <https://security.google.com/settings/security/apppasswords>.
-4. Log in using your Gmail account.
-5. In **Select app** choose **Other (Customised name)** and in **Select device**
-choose **Other (Customised name)**.
-6. Click **GENERATE**.
-7. Name it as *FreeBSD* or something.
-8. Copy your new app password to the clipboard.
-9. Go to <https://gmail.com> and open **Settings**.
-10. Go to **Accounts and Import**, then in the **Send mail as:** section click
-**Add another email address that you own**. A window titled **Gmail - Add
-another email address that you own** should pop up.
-11. Enter your name and your FreeBSD email alias like *xxx@FreeBSD.org*.
+   from the FreeBSD admins.
 
- Note that you should use your own username connected to your Gmail account by
- the FreeBSD admins instead of _xxx_.
+1. Turn on the 2-step authentication at
+   https://myaccount.google.com/security/signinoptions/two-step-verification.
 
-12. Make sure that **Treat as an alias.** is checked. Proceed.
-13. Now fill in the information as follows:
-    * **SMPTP Server**: smtp.gmail.com
-    * **Port**: 587
-    * **Username**: youralias@gmail.com
-    * **Password**: *The one time password you've generated a couple of steps
-    earlier.*
-    * Check **Secured connection using TLS (recommended)**
+1. Go to https://security.google.com/settings/security/apppasswords.
 
-    Click **Add Account**.
+1. Log in using your Gmail account.
 
-14. You should receive an email with a confirmation that you want to allow Gmail
-to use your FreeBSD alias. The email should contain both a special code or a
-link to click. The easiest way is to just click the provided link so that your
-decision is approved.
-15. Cheers! You should be able to send emails using your @FreeBSD address from
-Gmail.
+1. In **Select app** choose **Other (Customised name)** and in **Select device**
+   choose **Other (Customised name)**.
+
+1. Click **GENERATE**.
+
+1. Name it as *FreeBSD* or something.
+
+1. Copy your new app password to the clipboard.
+
+1. Go to <https://gmail.com> and open **Settings**.
+
+1. Go to **Accounts and Import**, then in the **Send mail as:** section click
+   **Add another email address that you own**. A window titled **Gmail - Add
+   another email address that you own** should pop up.
+
+1. Enter your name and your FreeBSD email alias like *xxx@FreeBSD.org*.
+
+   Note that you should use your own username connected to your Gmail account by
+   the FreeBSD admins instead of _xxx_.
+
+1. Make sure that **Treat as an alias.** is checked. Proceed.
+
+1. Now fill in the information as follows:
+
+   * **SMPTP Server**: smtp.gmail.com
+   * **Port**: 587
+   * **Username**: youralias@gmail.com
+   * **Password**: *The one time password you've generated a couple of steps
+     earlier.*
+   * Check **Secured connection using TLS (recommended)**
+
+   Click **Add Account**.
+
+1. You should receive an email with a confirmation that you want to allow Gmail
+   to use your FreeBSD alias. The email should contain both a special code or
+   a link to click. The easiest way is to just click the provided link so that
+   your decision is approved.
+
+1. Cheers! You should be able to send emails using your @FreeBSD address from
+   Gmail.
