@@ -149,11 +149,13 @@ Add `setxkbmap -option ctrl:nocaps` to your `~/.xinitrc`.
 
 # Network
 
-## WiFi TP-LINK TL-WN321G drivers
+## Set up WiFi USB dongle
+
+### TP-LINK TL-WN321G
 
 Add `if_rum_load="YES"` to `/boot/loader.conf`.
 
-## TP-LINK TL-WN725N v2.1
+### TP-LINK TL-WN725N v2.1
 
 Add to `/boot/loader.conf`:
 
@@ -170,6 +172,16 @@ ifconfig_wlan33="DHCP WPA"
 ```
 
 You might need to restart `netif`.
+
+## `wpa_supplicant.conf`
+
+```text
+ctrl_interface=/var/run/wpa_supplicant
+network={
+ssid="name"
+psk="pass"
+}
+```
 
 # Software installation
 
