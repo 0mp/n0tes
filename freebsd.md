@@ -362,7 +362,13 @@ adduser
 ## Add a user to the wheel
 
 ```sh
-sudo pw group mod wheel -m <username>
+sudo pw group mod wheel -m winniethepooh
+```
+
+## Modify user's full name
+
+```sh
+pw usermod winniethepooh -c "Winnie-the-Pooh"
 ```
 
 # Video
