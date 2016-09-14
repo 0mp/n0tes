@@ -87,6 +87,25 @@ your FreeBSD won't boot.
 3. Type `boot`.
 4. Log in and remove that awful line from `loader.conf`.
 
+# Drives
+
+## List all drives
+
+There are a few different commands:
+
+- `geom disk list`
+- `gpart list`
+- `usbconfig list`
+
+## USB
+
+### Eject (unmount) a USB drive
+
+It is sufficient to simply unmount a USB drive with `umount`.
+
+Reference:
+http://unix.stackexchange.com/questions/35508/eject-usb-drives-eject-command
+
 # Keyboard
 
 ## Set the key repeat rate
