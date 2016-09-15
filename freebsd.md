@@ -330,6 +330,14 @@ After fixing `/etc/login.conf` simply run `cap_mkdb /etc/login.conf`. Hopefully,
 it does not produce any warnings. Now you should be able to log in again to your
 FreeBSD.
 
+# Sound
+
+## Change volume
+
+```sh
+mixer vol +10
+```
+
 # Time and date
 
 ## Synchronize with the global time using ntp
