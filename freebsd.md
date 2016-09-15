@@ -381,6 +381,52 @@ pw usermod winniethepooh -c "Winnie-the-Pooh"
 
 # Video
 
+## Brightness
+
+There are a few ways to do it. `xrandr` will work in most cases though.
+
+### Control brightness using `acpi_video` kernel module
+
+1. Load the kernel module:
+
+   ```sh
+   kldload acpi_video
+   ```
+
+1. Use your hot keys to modify the brightness. `xbacklight(1)` might work as
+   well.
+
+### Modify `xorg.conf` to enable birghtness control
+
+This one might work for Nvidia. Add the following lines to the `Device` section
+of your `xorg.conf` file:
+
+```text
+Option      "RegistryDwords" "EnableBrightnessControl=1"
+```
+
+### Control brightness with `xrandr(1)`
+
+```sh
+xrandr --output HDMI-0 --brightness 0.5
+```
+
+### Control brightness using `xbrightness(1)`
+
+1. Install:
+
+   ```sh
+   pkg install xbrightness
+   ```
+
+1. Use:
+
+   ```sh
+   xbrightness 65000
+   ```
+
+   Remember to use values close to 60k or you might end up with a black screen.
+
 ## Change the video mode
 
 If the screen resolution is too small then you can change it using
