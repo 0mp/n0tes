@@ -42,6 +42,8 @@ BunsenLabs GNU/Linux and FreeBSD using GRUB 2
    kfreebsd /boot/loader
    }
    ```
+   
+4. Run `grub2-mkconfig -o /boot/grub2/grub.cfg`.
 
 ([Source][boot-grub2])
 
