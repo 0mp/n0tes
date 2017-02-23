@@ -42,7 +42,7 @@ BunsenLabs GNU/Linux and FreeBSD using GRUB 2
    kfreebsd /boot/loader
    }
    ```
-   
+
 4. Run `grub2-mkconfig -o /boot/grub2/grub.cfg`.
 
 ([Source][boot-grub2])
@@ -374,6 +374,16 @@ adduser
 ```sh
 sudo pw group mod wheel -m winniethepooh
 ```
+
+## Install `sudo`
+
+```sh
+pkg install sudo
+# Now, use `visudo` to uncomment the `%wheel ALL=(ALL) NOPASSWD: ALL` line to
+# allow the wheel group to use `sudo(8)`.
+visudo
+```
+
 
 ## Modify user's full name
 
