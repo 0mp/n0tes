@@ -42,7 +42,7 @@ BunsenLabs GNU/Linux and FreeBSD using GRUB 2
    kfreebsd /boot/loader
    }
    ```
-   
+
 4. Run `grub2-mkconfig -o /boot/grub2/grub.cfg`.
 
 ([Source][boot-grub2])
@@ -88,6 +88,21 @@ your FreeBSD won't boot.
 2. Type `set ketn.vty=""`.
 3. Type `boot`.
 4. Log in and remove that awful line from `loader.conf`.
+
+# Development
+
+## Tracking the CURRENT / HEAD branch
+
+```sh
+rm -rf /usr/src
+# Why this URL? See https://www.freebsd.org/doc/handbook/svn.html, A.3.6.
+svn co https://svn.freebsd.org/base/head /usr/src
+# ...
+```
+
+See also:
+
+- https://www.bsdnow.tv/tutorials/stable-current
 
 # Drives
 
