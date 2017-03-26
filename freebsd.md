@@ -390,6 +390,16 @@ adduser
 sudo pw group mod wheel -m winniethepooh
 ```
 
+## Install `sudo`
+
+```sh
+pkg install sudo
+# Now, use `visudo` to uncomment the `%wheel ALL=(ALL) NOPASSWD: ALL` line to
+# allow the wheel group to use `sudo(8)`.
+visudo
+```
+
+
 ## Modify user's full name
 
 ```sh
