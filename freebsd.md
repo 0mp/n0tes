@@ -89,6 +89,21 @@ your FreeBSD won't boot.
 3. Type `boot`.
 4. Log in and remove that awful line from `loader.conf`.
 
+# Development
+
+## Tracking the CURRENT / HEAD branch
+
+```sh
+rm -rf /usr/src
+# Why this URL? See https://www.freebsd.org/doc/handbook/svn.html, A.3.6.
+svn co https://svn.freebsd.org/base/head /usr/src
+# ...
+```
+
+See also:
+
+- https://www.bsdnow.tv/tutorials/stable-current
+
 # Drives
 
 ## List all drives
@@ -384,6 +399,16 @@ adduser
 ```sh
 sudo pw group mod wheel -m winniethepooh
 ```
+
+## Install `sudo`
+
+```sh
+pkg install sudo
+# Now, use `visudo` to uncomment the `%wheel ALL=(ALL) NOPASSWD: ALL` line to
+# allow the wheel group to use `sudo(8)`.
+visudo
+```
+
 
 ## Modify user's full name
 
