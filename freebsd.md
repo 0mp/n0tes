@@ -42,7 +42,7 @@ BunsenLabs GNU/Linux and FreeBSD using GRUB 2
    kfreebsd /boot/loader
    }
    ```
-   
+
 4. Run `grub2-mkconfig -o /boot/grub2/grub.cfg`.
 
 ([Source][boot-grub2])
@@ -151,6 +151,14 @@ Add `setxkbmap -option ctrl:nocaps` to your `~/.xinitrc`.
 
 # Network
 
+## Temporary network device
+
+```sh
+ifconfig wlan40 create wlandev rum0
+```
+
+Suprisingly, `dhclient` seems to like `wlan40` much more than it does `rum0`.
+
 ## Set up WiFi USB dongle
 
 ### TP-LINK TL-WN321G
@@ -174,6 +182,8 @@ ifconfig_wlan33="DHCP WPA"
 ```
 
 You might need to restart `netif`.
+
+Doesn't seem to work on eMac (powerpc).
 
 ## `wpa_supplicant.conf`
 
