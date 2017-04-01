@@ -599,12 +599,12 @@ autostart.sh.
    ```text
    network={
        ssid="eduroam"
-       proto=WPA WPA2
        key_mgmt=WPA-EAP
-       eap=PEAP
-       group=TKIP
-       identity="<pesel>@uw.edu.pl"
-       password="secretsexgod"
+       eap=TTLS
+       identity="xx123456@mimuw.edu.pl"
+       anonymous_identity="anonymous@mimuw.edu.pl"
+       password="xxx"
+       phase2="auth=MSCHAPV2"
    }
    ```
 
