@@ -180,6 +180,21 @@ Add `setxkbmap -option ctrl:nocaps` to your `~/.xinitrc`.
 
 1. Add `keymap="pl_PL.ISO8859-2.kbd"` to `/etc/rc.conf`.
 
+### UTF-8 and Polish keyboard
+
+Doesn't work when working at a virtual terminal.
+
+1. Put the following lines to `~/.login_conf`:
+
+   ```
+   me:\
+   	:charset=UTF-8:\
+   	:lang=en_US.UTF-8:\
+   	:setenv=LC_COLLATE=C:
+   ```
+
+1. Add `setxkbmap pl` to your `~/.xinitrc`.
+
 # Network
 
 ## Temporary network device
@@ -633,6 +648,10 @@ autostart.sh.
 ### Resources
 
 - [FreeBSD wireless quickstart][net-quickstart]
+- FreeBSD Wireless Quickstart: https://srobb.net/fbsdquickwireless.html
+- https://forums.freebsd.org/threads/43651/#post-243274
+- http://lk.mimuw.edu.pl/index.php/linux
+- https://www.freebsd.org/cgi/man.cgi?wpa_supplicant.conf
 
 [net-quickstart]: https://srobb.net/fbsdquickwireless.html
 
