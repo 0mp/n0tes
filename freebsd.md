@@ -89,6 +89,22 @@ your FreeBSD won't boot.
 3. Type `boot`.
 4. Log in and remove that awful line from `loader.conf`.
 
+# Console
+
+## Turn off beep
+
+FreeBSD > 11:
+
+```sh
+sysctl kern.vt.enable_bell=0
+```
+
+Older:
+
+```sh
+sysctl hw.syscons.bell=0
+```
+
 # Development
 
 ## Tracking the CURRENT / HEAD branch
