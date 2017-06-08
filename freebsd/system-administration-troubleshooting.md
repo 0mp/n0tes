@@ -15,3 +15,16 @@ See also:
 - `/etc/periodic/`
 
 ---
+
+### How to mount ext4?
+
+```sh
+pkg install fusefs-ext4fuse
+kldload fuse.ko
+mount /dev/da0p1 /mnt
+```
+
+See also:
+
+- http://blog.ataboydesign.com/2014/04/23/freebsd-10-mounting-usb-drive-with-ext4-filesystem/
+- https://www.freebsd.org/doc/handbook/usb-disks.html
