@@ -1,4 +1,6 @@
-# Mouse
+## Mouse
+
+### Basic support
 
 - Add to `/etc/rc.conf`:
 
@@ -32,10 +34,18 @@
 
   ```sh
   hw.psm.synaptics_support="1"
-  
+
   ```
 
-## See also
+### Natural scrolling
+
+Set in `~/.Xmodmap`:
+
+```
+pointer = 1 2 3 5 4 6 7 8 9 10
+```
+
+### See also
 
 - https://www.tomek.cedro.info/page/2/
 - http://kartowicz.com/dryobates/2014-02/synaptics-freebsd/
