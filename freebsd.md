@@ -415,6 +415,9 @@ Well, then you should try to remove the `/etc/wall_cmos_clock` file.
 
 ([Source][time-2])
 
+If you've already tried tinkering with `adjkerntz(9)`, `/etc/wall_cmos_clock` and
+`tzsetup` then it's time to manually set up time with `date(1)`.
+
 [time-2]: https://forums.freebsd.org/threads/48401/#post-271086
 
 # User accounts
