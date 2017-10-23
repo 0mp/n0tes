@@ -13,3 +13,21 @@
 ## Restart sshd
 
     systemctl restart ssh
+
+# Virtual terminal
+
+## Screen goes black after a few minutes of uptime
+
+Run
+
+```sh
+cat /sys/module/kernel/parameters/consoleblank
+```
+
+and if it's not 0 then call
+
+```sh
+setterm -blank 0
+```
+
+Details: https://unix.stackexchange.com/a/32043/128489
