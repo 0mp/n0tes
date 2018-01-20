@@ -18,7 +18,6 @@ configures Ubuntu so that it sees `dwm` as an alternative window manager.
 
 ```bash
 sudo apt-get install texlive-full
-sudo apt-get install texmaker
 ```
 
 Reference: https://milq.github.io/install-latex-ubuntu-debian/
