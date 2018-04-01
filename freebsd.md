@@ -45,9 +45,11 @@ BunsenLabs GNU/Linux and FreeBSD using GRUB 2
 
 4. Run `grub2-mkconfig -o /boot/grub2/grub.cfg`.
 
-([Source][boot-grub2])
+### References
 
-[boot-grub2]: https://srobb.net/grub2.html
+ * [GRUB2 Notes (scrobb.net)][boot-grub2]
+
+[boot-grub2]: http://srobb.net/grub2.html
 
 ## Fix `run_interrupt_driven_hooks still waiting after 60 seconds for xpt_config`
 
@@ -63,10 +65,10 @@ hint.ata.1.disabled="1"
 My old laptop decided to boot after setting **ACPI Support** and **Safe Mode**
 options ON.
 
-## Login in single user mode and make the file system writable.
+## Login in single user mode and make the file system writable
 
 I get *Read-only file system* error when I boot into the single user mode.
-According to [this website (link)][boot-single-user-mode] you can simply run:
+According to [this website][boot-single-user-mode] you can simply run:
 
 ```sh
 # Change the filesystem from read-only to write/read.
@@ -116,9 +118,13 @@ svn co https://svn.freebsd.org/base/head /usr/src
 # ...
 ```
 
-See also:
+### References
 
-- https://www.bsdnow.tv/tutorials/stable-current
+- [Tracking -STABLE and -CURRENT (FreeBSD) (www.bsdnow.tv)][devel-bsdnow]
+- [Scripts I use to live on the CURRENT branch][devel_dotfiles_freebsd_current]
+
+[devel-bsdnow]: https://www.bsdnow.tv/tutorials/stable-current
+[devel_dotfiles_freebsd_current]: https://github.com/0mp/dotfiles/blob/master/root_freebsd_current/setup
 
 # Drives
 
@@ -165,7 +171,11 @@ my `~/.bashrc`.
 
 Add `setxkbmap -option ctrl:nocaps` to your `~/.xinitrc`.
 
-## Set Polish keyboard.
+## Set Polish keyboard in console
+
+1. Add `keymap="pl.kbd"` to `/etc/rc.conf`.
+
+## Set Polish keyboard in X
 
 1. Add to the default class inside `/etc/login.conf`:
 
@@ -174,36 +184,15 @@ Add `setxkbmap -option ctrl:nocaps` to your `~/.xinitrc`.
  :lang=en_GB.UTF-8:
  ```
 
-1. Run `cap_mkdb /etc/login.conf`.
-
-1. Add `setxkbmap pl` to your `~/.xinitrc`.
-
-1. Add `keymap="pl_PL.ISO8859-2.kbd"` to `/etc/rc.conf`.
-
-### UTF-8 and Polish keyboard
-
-Doesn't work when working at a virtual terminal.
-
-1. Put the following lines to `~/.login_conf`:
-
-   ```
-   me:\
-   	:charset=UTF-8:\
-   	:lang=en_US.UTF-8:\
-   	:setenv=LC_COLLATE=C:
-   ```
-
-1. Add `setxkbmap pl` to your `~/.xinitrc`.
+2. Run `cap_mkdb /etc/login.conf`.
 
 # Network
 
 ## Temporary network device
 
 ```sh
-ifconfig wlan40 create wlandev rum0
+ifconfig wlan0 create wlandev rum0
 ```
-
-Suprisingly, `dhclient` seems to like `wlan40` much more than it does `rum0`.
 
 ## Set up WiFi USB dongle
 
@@ -223,8 +212,8 @@ legal.realtek.license_ack=1
 Add to `/etc/rc.conf`:
 
 ```text
-wlans_urtwn0="wlan33"
-ifconfig_wlan33="DHCP WPA"
+wlans_urtwn0="wlan0"
+ifconfig_wlan0="DHCP WPA"
 ```
 
 You might need to restart `netif`.
@@ -315,7 +304,6 @@ psk="pass"
 
 ```sh
 freebsd-update fetch && freebsd-update install
-pkg version -vIl '<'
 pkg upgrade
 ```
 
@@ -443,7 +431,6 @@ pkg install sudo
 visudo
 ```
 
-
 ## Modify user's full name
 
 ```sh
@@ -455,6 +442,10 @@ pw usermod winniethepooh -c "Winnie-the-Pooh"
 ## Brightness
 
 There are a few ways to do it. `xrandr` will work in most cases though.
+
+See also:
+
+ * [Brightness (wiki.freebsd.org)](https://wiki.freebsd.org/Graphics/Brightness)
 
 ### Control brightness using `acpi_video` kernel module
 
@@ -530,7 +521,7 @@ vidcontrol MODE_278
 
 [wm-dwm-1]: http://agreif.blogspot.com/2014/03/configure-dwm-on-freebsd.html
 [wm-dwm-2]: https://forums.freebsd.org/threads/7816://forums.freebsd.org/threads/7816/
-[wm-dwm-3]: https://srobb.net/dwm.html
+[wm-dwm-3]: http://srobb.net/dwm.html
 
 ## i3wm
 
@@ -539,25 +530,6 @@ vidcontrol MODE_278
 See [installation tuturial][wm-i3wm-install].
 
 [wm-i3wm-install]: http://bottlenix.wikidot.com/installing-i3wm
-
-### Basics
-
-| Action | Shortcut |
-|--------|----------|
-| Open a new terminal | mod + Enter |
-| Split vertically | mod + v |
-| Split horizontally | mod + h |
-| Change to splith/splitv layout | mod + e |
-| Change to stacking layout | mod + s |
-| Change to tabbed layout | mod + w |
-| Go fullscreen | mod + f |
-| Close a window | C + w |
-| Kill a window | mod + S + q |
-| Go to a workspace | mod + num |
-| Move to a workspace | mod + S + num |
-| Restart i3 inplace | mod + S + r |
-| Exit i3 | mod + S + e |
-| Toggle floating mode | mod + S + Space |
 
 ### Configuration files
 
@@ -576,22 +548,6 @@ See [installation tuturial][wm-i3wm-install].
 [wm-mate-1]: https://www.youtube.com/watch?v=YncqBz0bZcQ
 
 ## OpenBox
-
-```sh
-su
-freebsd-update fetch && freebsd-update install
-pkg install xorg openbox tint2
-cd ~
-mkdir .config
-cd .config
-mkdir openbox
-mkdir tint2
-cp /usr/local/etc/xdg/openbox/*.xml openbox/
-echo '#!/bin/sh' >> openbox/autostart.sh
-chmod +x openbox/autostart.sh
-echo 'hald_enable="YES"' >> /etc/rc.conf
-echo 'exec openbox-session' >> ~/.xinitrc
-```
 
 - [daemon-notes][wm-openbox-1]
 - [forums.freebsd.org][wm-openbox-2]
@@ -615,14 +571,16 @@ autostart.sh.
 1. Add the following content to `/etc/wpa_supplicant.conf`:
 
    ```text
+   ctrl_interface=/var/run/wpa_supplicant
+   ctrl_interface_group=wheel
    network={
-       ssid="eduroam"
-       key_mgmt=WPA-EAP
-       eap=TTLS
-       identity="xx123456@mimuw.edu.pl"
-       anonymous_identity="anonymous@mimuw.edu.pl"
-       password="xxx"
-       phase2="auth=MSCHAPV2"
+           ssid="eduroam"
+           scan_ssid=1
+           key_mgmt=WPA-EAP
+           eap=TTLS
+           identity="user@example.org"
+           password="foobar"
+           phase2="auth=MSCHAPV2"
    }
    ```
 
@@ -634,15 +592,9 @@ autostart.sh.
 
 3. Restart:
 
- ```sh
- /etc/rc.d/netif restart
- ```
-
- or
-
- ```sh
- service netif restart
- ```
+    ```sh
+    service netif restart
+    ```
 
 ([Source][net-eduroam])
 
