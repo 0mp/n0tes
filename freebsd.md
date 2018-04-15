@@ -1,3 +1,29 @@
+# Battery
+
+## Check status
+
+```sh
+apm
+```
+
+or
+
+```sh
+sysctl hw.acpi.battery
+```
+
+or
+
+```sh
+acpiconf -i 0
+```
+
+## Development Troubleshooting
+
+_fatal error: 'X11/Xlib.h' file not_
+
+The X11 library and header files can be found in `/usr/local/include` and `/usr/local/libs`.
+
 # Boot
 
 ## Cannot boot to multiuser due to a segmentation fault in `fsck`
@@ -144,6 +170,59 @@ It is sufficient to simply unmount a USB drive with `umount`.
 
 Reference:
 http://unix.stackexchange.com/questions/35508/eject-usb-drives-eject-command
+
+# Mouse
+
+## Basic support
+
+- Add to `/etc/rc.conf`:
+
+  ```sh
+  moused_enable="YES
+  ```
+
+- Add to `/usr/local/etc/X11/xorg.conf.d/11-synaptics-trackpad.conf`:
+
+  ```
+  Section "InputDevice"
+        Identifier  "Touchpad0"
+        Driver      "synaptics"
+        Option      "Protocol" "psm"
+        Option      "Device" "/dev/psm0"
+        Option      "VertEdgeScroll" "off"
+        Option      "VertTwoFingerScroll" "on"
+        #Option      "HorizEdgeScroll" "off"
+        #Option      "HorizTwoFingerScroll" "on"
+        Option      "VertScrollDelta" "-111"
+        #Option      "HorizScrollDelta" "-111"
+        Option      "ClickPad" "on"
+        #Option      "SoftButtonAreas" "4201 0 0 1950 2710 4200 0 1950"
+        #Option      "AreaTopEdge" "5%"
+  EndSection
+  ```
+
+  I am not sure if it is needed however.
+
+- Add to `/boot/loader.conf`:
+
+  ```sh
+  hw.psm.synaptics_support="1"
+
+  ```
+
+## Natural scrolling
+
+Set in `~/.Xmodmap`:
+
+```
+pointer = 1 2 3 5 4 6 7 8 9 10
+```
+
+### See also
+
+- https://www.tomek.cedro.info/page/2/
+- http://kartowicz.com/dryobates/2014-02/synaptics-freebsd/
+- https://lists.freebsd.org/pipermail/freebsd-mobile/2016-April/013404.html
 
 # Keyboard
 
@@ -297,6 +376,11 @@ psk="pass"
   Consider using the `-d` option to automatically delete old files. Still
   awfully slow. ([Source][soft-d])
 
+### See also
+
+ - https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-ports-on-freebsd-10-1
+
+
 [soft-ocean-ports]: https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-ports-on-freebsd-10-1
 [soft-d]: https://lists.freebsd.org/pipermail/freebsd-questions/2012-July/243052.html
 
@@ -383,6 +467,79 @@ FreeBSD.
 ```sh
 mixer vol +10
 ```
+
+# System Administration Troubleshooting
+
+
+## Broken `man -k`
+
+`man -k`, `apropos` and `whatis` don't work. It looks like `whatis` database is
+missing.
+
+The solution is to run `makewhatis(1)`.
+
+See also:
+
+- `freebsd-update` and `whatis`: https://forums.freebsd.org/threads/53194/
+- `/etc/periodic/`
+
+
+## How to mount ext4?
+
+```sh
+pkg install fusefs-ext4fuse
+kldload fuse.ko
+mount /dev/da0p1 /mnt
+```
+
+See also:
+
+- http://blog.ataboydesign.com/2014/04/23/freebsd-10-mounting-usb-drive-with-ext4-filesystem/
+- https://www.freebsd.org/doc/handbook/usb-disks.html
+
+# Printing
+
+## Remote printer
+
+### Configure `/etc/printcap`
+
+Requirements:
+
+ * `LPADDR=192.168.200.200` or `LPADDR=your-local-printer`
+
+```
+lp:\
+        :rm=${LPADDR}:rp=raw:\
+        :sh:\
+        :mx#0:\
+        :sd=/var/spool/lpd/lp:\
+        :lf=/var/log/lpd-errs:
+```
+
+The `lpd` daemon has to be restarted.
+
+### Print PDF files from a command line
+
+```sh
+pdf=file.pdf
+ps=file.ps
+pcl=file.pcl
+printeraddr=192.168.0.13 # The name of the printer on the network.
+
+# Printers prefer the PCL format.
+pdf2ps "$pdf" "$ps"
+cat "$ps" | gs -dSAFER -dNOPAUSE -q -sDEVICE=laserjet -sOutputFile=- - >"$pcl"
+
+# If the lp service is configured then:
+lpr "$pcl"
+# otherwise it is possible to use netcat:
+nc "$printeraddr" 9100 < "$pcl"
+```
+
+### References
+
+ * https://www.freebsd.org/doc/handbook/printing.html
+ * http://www.wonkity.com/~wblock/docs/html/lpdprinting.html
 
 # Time and date
 
