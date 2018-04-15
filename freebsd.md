@@ -284,14 +284,13 @@ Add `if_rum_load="YES"` to `/boot/loader.conf`.
 Add to `/boot/loader.conf`:
 
 ```text
-if_urtwn_load="YES"
-legal.realtek.license_ack=1
+if_rtwn_load="YES"
 ```
 
 Add to `/etc/rc.conf`:
 
 ```text
-wlans_urtwn0="wlan0"
+wlans_rtwn0="wlan0"
 ifconfig_wlan0="DHCP WPA"
 ```
 
