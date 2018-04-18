@@ -1,13 +1,8 @@
-Basic gitology
---------------
+## Basic gitology
 
 Expand all paths with `git status`
 
     git status -u
-
-Publish your commits
-
-    git push origin master
 
 Pull and append local commits
 
@@ -22,8 +17,7 @@ Or if everything goes wrong then
 
     git rebase --abort
 
-Branches
---------
+## Branches
 
 Request a new branch
 
@@ -44,7 +38,7 @@ Merge the feature into master
     git pull origin awesome-branch
     git push
 
-### Clean up
+### Branch clean up
 
 Delete stale remote-tracking branches
 
@@ -53,3 +47,9 @@ Delete stale remote-tracking branches
 Sync the server list of branches with the local list.
 
     git push --mirror <origin>
+
+## Various settings
+
+Remove `a/` and `/b/ prefixes from Git diffs:
+
+    git config --local diff.noprefix true
