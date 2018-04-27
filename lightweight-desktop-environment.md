@@ -15,3 +15,8 @@
 ```sh
 xwd | xwdtopnm | pnmtopng > Screenshot.png
 ```
+
+### Clipboard
+
+ - autocutsel
+ - xsel-conrad
