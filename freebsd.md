@@ -482,6 +482,7 @@ See also:
 - `freebsd-update` and `whatis`: https://forums.freebsd.org/threads/53194/
 - `/etc/periodic/`
 
+## FUSE
 
 ## How to mount ext4?
 
@@ -495,6 +496,20 @@ See also:
 
 - http://blog.ataboydesign.com/2014/04/23/freebsd-10-mounting-usb-drive-with-ext4-filesystem/
 - https://www.freebsd.org/doc/handbook/usb-disks.html
+
+## How to mount NTFS?
+
+```sh
+pkg install sysutils/fusefs-ntfs
+kldload fuse
+sysrc fusefs_enable=”YES” # Might not be needed.
+ntfs-3g /dev/da0s1 /mnt/
+```
+
+See also:
+
+- http://virtuallyhyper.com/2012/10/mounting-an-ntfs-disk-in-write-mode-in-freebsd-9/
+- https://forums.freebsd.org/threads/mount-ntfs-windows-partition.5989/
 
 # Printing
 
