@@ -113,7 +113,7 @@ Let's say you've added `kern.vty=vt` to your `/boot/loader.conf` and now
 your FreeBSD won't boot.
 
 1. **Escape to loader prompt** in the boot menu.
-2. Type `set ketn.vty=""`.
+2. Type `set kern.vty=""`.
 3. Type `boot`.
 4. Log in and remove that awful line from `loader.conf`.
 
